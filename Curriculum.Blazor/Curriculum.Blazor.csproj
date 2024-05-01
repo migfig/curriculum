@@ -16,7 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Curriculum.EF\curriculum\Curriculum.EF.csproj" />
+		<ProjectReference Include="..\Curriculum.EF\Curriculum.EF.csproj" />
 	</ItemGroup>
 
 </Project>
