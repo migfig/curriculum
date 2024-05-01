@@ -1,0 +1,9 @@
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity?.Name!
+        <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Link="Logout" />
+    </Authorized>
+    <NotAuthorized>
+        <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="Login" />
+    </NotAuthorized>
+</AuthorizeView>

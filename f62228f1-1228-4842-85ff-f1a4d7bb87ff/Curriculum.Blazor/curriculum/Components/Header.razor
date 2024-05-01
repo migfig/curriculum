@@ -1,0 +1,54 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+<MudItem xs="12" md="6" lg="6">
+    <MudText Typo="Typo.h5" Color="Color.Primary" Style="text-transform: uppercase">@Item.Name</MudText>
+</MudItem>
+<MudItem xs="12" md="6" lg="6">
+    <MudStack Class="d-flex align-end justify-end align-content-end">
+        <MudStack Row Class="align-center">
+            <MudText Typo="Typo.overline" Color="Color.Primary">@User?.Addresses.FirstOrDefault()?.City, @User?.Addresses.FirstOrDefault()?.State</MudText>
+            <MudIcon Icon="@Icons.Material.TwoTone.LocationOn" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small"></MudIcon>
+        </MudStack>
+        <MudStack Row Class="align-center">
+            <MudText Typo="Typo.overline" Color="Color.Primary">@Item.Phones.FirstOrDefault()</MudText>
+            <MudIcon Icon="@Icons.Material.TwoTone.Phone" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small"></MudIcon>
+            <MudText Typo="Typo.overline" Color="Color.Primary">|</MudText>
+            <MudLink Typo="Typo.overline" Color="Color.Primary" Href="@Item.Emails.FirstOrDefault()">Linkedin</MudLink>
+            <MudIcon Icon="@Icons.Material.TwoTone.Email" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small"></MudIcon>
+        </MudStack>
+    </MudStack>
+</MudItem>
+<MudDivider Style="width: 100%"></MudDivider>
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+        <MudIcon Icon="@Icons.Material.TwoTone.AdsClick" Variant="Variant.Filled" Color="Color.Secondary"
+            Size="Size.Small"></MudIcon> Objective
+    </MudText></MudItem>
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.body2" Color="Color.Default">@Item.ProfileValue</MudText>
+</MudItem>
+
+@code {
+    [Inject]
+    private IApplicationState state {get; set;}
+
+    [Parameter]
+    public string Label {get; set;} = "Education";
+
+    [Parameter]
+    public Resume Item {get; set;} = null!;
+
+    [Parameter]
+    public User User {get; set;} = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+    
+    public void Dispose() {
+        state.OnChange -= StateHasChanged;
+    }
+}

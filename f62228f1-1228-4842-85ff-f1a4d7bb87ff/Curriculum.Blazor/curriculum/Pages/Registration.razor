@@ -1,0 +1,80 @@
+@page "/registration"
+
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<style>
+    img {
+        filter: opacity(0.9) blur(1px) grayscale(0.8);
+        -webkit-filter: opacity(0.9) blur(1px) grayscale(0.8);
+        -moz-filter: opacity(0.9) blur(1px) grayscale(0.8);
+    }    
+</style>
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height: 90vh">
+            <MudPaper Height="573px" Width="474px" Square Class="mud-theme-primary">
+                <MudImage Src="images/thin-laptop-final.jpeg" ObjectFit="ObjectFit.Contain" Fluid="true"
+                    Alt="register page" Height="573"></MudImage>
+            </MudPaper>
+            <EditForm Model="signUpRequest" OnValidSubmit="Register">
+                <DataAnnotationsValidator />
+
+                <MudCard Class="ml-n3">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Register</MudText>
+                            <MudText Typo="Typo.overline">Please enter your new login credentials or</MudText>
+                            <MudLink Typo="Typo.overline" Href="login">sign in</MudLink>
+                            <MudText Typo="Typo.overline">if you already have some</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Default" />
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudTextField Label="Full Name" Immediate="true" InputType="InputType.Text"
+                            HelperText="Name should have a maximum of 50 characters in length" HelperTextOnFocus="true"
+                            Counter="50" MaxLength="50" Adornment="Adornment.End"
+                            AdornmentIcon="@Icons.Material.Filled.Person" AdornmentAriaLabel="Name"
+                            Validation="@(new Func<string,int,IEnumerable<string>>(MaxCharacters))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signUpRequest.FullName"
+                            For="@(() => signUpRequest.FullName)" />
+                        <MudTextField Label="Email" Immediate="true" InputType="InputType.Email"
+                            HelperText="Email should have a maximum of 50 characters in length" HelperTextOnFocus="true"
+                            Counter="50" MaxLength="50" Adornment="Adornment.End"
+                            AdornmentIcon="@Icons.Material.Filled.Email" AdornmentAriaLabel="Email"
+                            Validation="@(new Func<string,int,IEnumerable<string>>(MaxCharacters))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signUpRequest.Email"
+                            For="@(() => signUpRequest.Email)" />
+                        <MudTextField Label="Password" Immediate="true" InputType="@PasswordInputType"
+                            @ref="passwordField" HelperText="Password should have a maximum of 25 characters in length"
+                            HelperTextOnFocus="true" Counter="25" MaxLength="25" Adornment="Adornment.End"
+                            AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="() => ShowPassword = !ShowPassword"
+                            Validation="@(new Func<string,IEnumerable<string>>(PasswordStrength))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signUpRequest.Password"
+                            For="@(() => signUpRequest.Password)" />
+                        <MudTextField Label="Confirm Password" Immediate="true" InputType="@PasswordInputType"
+                            HelperText="Password should have a maximum of 25 characters in length"
+                            HelperTextOnFocus="true" Counter="25" MaxLength="25" Adornment="Adornment.End"
+                            AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="() => ShowPassword = !ShowPassword"
+                            Validation="@(new Func<string, string>(PasswordMatch))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signUpRequest.ConfirmPassword"
+                            For="@(() => signUpRequest.ConfirmPassword)" />
+                        <MudCheckBox @bind-Checked="signUpRequest.Terms" Label="I Accept terms & conditions">
+                        </MudCheckBox>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Outlined.Login"
+                            Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Sign Up</MudButton>
+                    </MudCardActions>
+                    @if (!actionResult.Succeeded && !string.IsNullOrEmpty(actionResult.Error))
+                    {
+                    <MudText Typo="Typo.overline" Color="Color.Error" Class="ml-2">@actionResult.Error</MudText>
+                    }
+                </MudCard>
+            </EditForm>
+        </MudStack>
+    </MudItem>
+</MudGrid>

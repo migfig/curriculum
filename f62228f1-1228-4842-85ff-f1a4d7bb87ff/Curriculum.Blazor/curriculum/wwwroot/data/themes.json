@@ -1,0 +1,87 @@
+[
+  {
+    "Name": "Blue-Spare",
+    "Url": "/assets/images/blue-spare-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#17698eff" },
+      { "Name": "Palette.Secondary", "Value": "#17698eff" },
+      { "Name": "Palette.Info", "Value": "#13b8e8ff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#113b53ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#13b8e8ff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#479fd3ff" },
+      { "Name": "PaletteDark.Info", "Value": "#86b953ff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#17698eff" }
+    ]
+  },
+  {
+    "Name": "Green-Autumn",
+    "Url": "/assets/images/green-autumn-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#17a258ff" },
+      { "Name": "Palette.Secondary", "Value": "#1bbd66ff" },
+      { "Name": "Palette.Info", "Value": "#bdffcfff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#127942ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#17a258ff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#1bbd66ff" },
+      { "Name": "PaletteDark.Info", "Value": "#86b953ff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#127942ff" }
+    ]
+  },
+  {
+    "Name": "Brown-Coffee",
+    "Url": "/assets/images/brown-coffee-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#d9980dff" },
+      { "Name": "Palette.Secondary", "Value": "#ff9102ff" },
+      { "Name": "Palette.Info", "Value": "#fdd22fff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#bf7d11ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#ff9800ff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#ff9102ff" },
+      { "Name": "PaletteDark.Info", "Value": "#ffb31fff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#bf7d11ff" }
+    ]
+  },
+  {
+    "Name": "Red-Square",
+    "Url": "/assets/images/red-square-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#fe6800ff" },
+      { "Name": "Palette.Secondary", "Value": "#fe6800ff" },
+      { "Name": "Palette.Info", "Value": "#ebb323ff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#aa0000ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#dc3f11ff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#ff9102ff" },
+      { "Name": "PaletteDark.Info", "Value": "#d9980dff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#dc3f11ff" }
+    ]
+  },
+  {
+    "Name": "Grey-Alive",
+    "Url": "/assets/images/grey-alive-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#585b62ff" },
+      { "Name": "Palette.Secondary", "Value": "#858791ff" },
+      { "Name": "Palette.Info", "Value": "#858586ff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#353940ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#e6e9ebff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#17698eff" },
+      { "Name": "PaletteDark.Info", "Value": "#17a258ff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#585b62ff" }
+    ]
+  },
+  {
+    "Name": "Blue-Light",
+    "Url": "/assets/images/blue-light-dark.png",
+    "Properties": [
+      { "Name": "Palette.Primary", "Value": "#13b8e8ff" },
+      { "Name": "Palette.Secondary", "Value": "#0989c2ff" },
+      { "Name": "Palette.Info", "Value": "#27dbf5ff" },
+      { "Name": "Palette.AppbarBackground", "Value": "#13b8e8ff" },
+      { "Name": "PaletteDark.Primary", "Value": "#13b8e8ff" },
+      { "Name": "PaletteDark.Secondary", "Value": "#13b8e8ff" },
+      { "Name": "PaletteDark.Info", "Value": "#17a258ff" },
+      { "Name": "PaletteDark.AppbarBackground", "Value": "#13b8e8ff" },
+      { "Name": "PaletteDark.AppbarText", "Value": "#ffffffff" }
+    ]
+  }
+]

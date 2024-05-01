@@ -1,0 +1,44 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+@if (RenderProgress) {
+<div class="loader-container">
+    <span class="loader"></span>
+    <span class="label">@Label</span>
+</div>
+} else if(@ChildContent != null) {
+    @ChildContent
+}
+
+@code {
+    [Inject]
+    private IApplicationState state {get; set;}
+
+    [Parameter]
+    public string Label {get; set;} = "loading...";
+
+    [Parameter]
+    public bool RenderProgress {get; set;}
+
+    [Parameter]
+    public RenderFragment ChildContent {get; set;}
+
+    [Parameter]
+    public Color OuterColor {get; set;}
+
+    [Parameter]
+    public Color BetweenColor {get; set;}
+    
+    [Parameter]
+    public Color InnerColor {get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+    
+    public void Dispose() {
+        state.OnChange -= StateHasChanged;
+    }
+}

@@ -1,0 +1,101 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+@if (Prefix != null)
+{
+    @Prefix
+}
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+        <MudIcon Icon="@Icons.Material.TwoTone.HomeWork" Variant="Variant.Filled" Color="Color.Secondary"
+            Size="Size.Small"></MudIcon> @Label
+    </MudText>
+</MudItem>
+<MudTimeline TimelineAlign="TimelineAlign.Default" TimelineOrientation="TimelineOrientation.Vertical"
+    TimelinePosition="TimelinePosition.Start" Style="width: 100%">
+    @foreach (var experience in Items.OrderByDescending(o => o.EndDate))
+    {
+        <MudTimelineItem Size="Size.Small" TimelineAlign="TimelineAlign.Start" Variant="Variant.Outlined"
+            DotStyle="background-color: transparent">
+            <ItemContent>
+                <MudCard Outlined Elevation="25">
+                     <MudCardHeader>
+                         <CardHeaderContent>
+                             <MudStack Row>
+                             <MudText Typo="Typo.body2" Color="Color.Tertiary" Style="font-weight: 600">
+                                 @experience.Company</MudText>
+                             <MudText Typo="Typo.body1" Color="Color.Default" Style="font-weight: 100">|
+                                 @experience.Position</MudText>
+                         </MudStack>
+                     </CardHeaderContent>
+                     <CardHeaderActions>
+                         <MudText Typo="Typo.overline" Color="Color.Default" Style="font-weight: 600">
+                             @experience.StartDate.ToString("MMM yyyy") - @(@experience.EndDate.CompareTo(DateTime.Now) > 0 ? "Now" : @experience.EndDate.ToString("MMM yyyy"))
+                         </MudText>
+                     </CardHeaderActions>
+                 </MudCardHeader>
+                 <MudCardContent>
+                     <MudText Typo="Typo.body2" Color="Color.Default" Style="font-weight: 100">
+                         <MudElement HtmlTag="p">@((MarkupString)@experience.JobDescription)</MudElement>
+                     </MudText>
+                     <MudStack>
+                         <MudText Typo="Typo.body2" Color="Color.Default" Class="mt-4"
+                             Style="font-weight: 600; font-style: italic">Achievements</MudText>
+                         @foreach (var achievement in experience.Achievements)
+                            {
+                                <MudText Typo="Typo.overline" Color="Color.Default" Class="ml-4 mr-4">
+                                    <MudElement HtmlTag="p">@((MarkupString)@achievement)</MudElement>
+                                </MudText>
+                            }
+                        </MudStack>
+                        <MudStack>
+                            <MudText Typo="Typo.body2" Color="Color.Default" Class="mt-4"
+                                Style="font-weight: 600; font-style: italic">Functional Experiences</MudText>
+                            @foreach (var funcExpr in experience.FunctionalExperiences)
+                            {
+                                <MudText Typo="Typo.overline" Color="Color.Default" Class="ml-4 mr-4">
+                                    <MudElement HtmlTag="p">@((MarkupString)@funcExpr)</MudElement>
+                                </MudText>
+                            }
+                        </MudStack>
+                        <MudChipSet MultiSelection="false" Filter="false">
+                            @foreach (var tool in experience.UsedTools)
+                            {
+                                <MudChip Variant="Variant.Text" Color="Color.Tertiary" Style="font-size: 0.8em">@tool</MudChip>
+                            }
+                        </MudChipSet>
+                    </MudCardContent>
+                </MudCard>
+            </ItemContent>
+            <ItemDot>
+                <MudIcon Icon="@Icons.Material.TwoTone.HomeWork" Variant="Variant.Outlined" Color="Color.Primary"
+                    Size="Size.Small"></MudIcon>
+            </ItemDot>
+        </MudTimelineItem>
+    }
+    </MudTimeline>
+
+    @code {
+    [Inject]
+    private IApplicationState state { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Work Experience";
+
+    [Parameter]
+    public ICollection<JobExperience> Items { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment? Prefix { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        state.OnChange -= StateHasChanged;
+    }
+}

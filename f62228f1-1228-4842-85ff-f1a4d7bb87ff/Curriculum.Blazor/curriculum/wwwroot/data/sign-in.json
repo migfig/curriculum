@@ -1,0 +1,52 @@
+{
+    "id": "73ce29fb-1dc1-4489-8cbb-98406d21a0b6",
+    "email": "viewer.user@domain.com",
+    "name": "Viewer",
+    "phone": "+52 123-456-78-90",
+    "jobTitle": "Reviewer",
+    "firstName": "Viewer",
+    "lastName": "User",
+    "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/698.jpg",
+    "isDeleted": false,
+    "dateCreated": "2023-10-25T12:46:24.053238Z",
+    "createdBy": "f8f36e72-2d98-4bad-8bc8-2e9dfb333a34",
+    "dateUpdated": "2023-08-09T09:50:04.443962Z",
+    "updatedBy": "bd67a0eb-4f42-42b6-a5d4-644daee32534",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3M2NlMjlmYi0xZGMxLTQ0ODktOGNiYi05ODQwNmQyMWEwYjYiLCJ1bmlxdWVfbmFtZSI6IlZpZXdlciIsImVtYWlsIjoidmlld2VyLnVzZXJAZG9tYWluLmNvbSIsIndlYnNpdGUiOiJodHRwczovL2Nsb3VkZmxhcmUtaXBmcy5jb20vaXBmcy9RbWQzVzVEdWhnSGlyTEhHVml4aTZWNzZMaENrWlV6NnBuRnQ1QUpCaXl2SHllL2F2YXRhci82OTguanBnIiwicm9sZSI6IlZpZXdlcnM9Q2FuVmlldyIsIm5iZiI6MTcxNDUyMzk4MiwiZXhwIjoyNjYxMjA4NzgyLCJpYXQiOjE3MTQ1MjM5ODJ9.xHCEY5D7O14X7hscczfJH2Y7ITA119wPe3d014NMC-M",
+    "addresses": [],
+    "contacts": [],
+    "groups": [
+        {
+            "id": "b157906f-b012-41e7-86e2-517d1866e213",
+            "name": "Viewers",
+            "permissions": [
+                {
+                    "id": "78e60288-5d44-404e-a5bd-764b16361f39",
+                    "name": "CanView",
+                    "groupId": "b157906f-b012-41e7-86e2-517d1866e213"
+                }
+            ],
+            "userId": "73ce29fb-1dc1-4489-8cbb-98406d21a0b6",
+            "user": {
+                "id": "73ce29fb-1dc1-4489-8cbb-98406d21a0b6",
+                "name": "Viewer",
+                "email": "viewer.user@domain.com",
+                "phone": "+52 123-456-78-90",
+                "jobTitle": "Reviewer",
+                "firstName": "Viewer",
+                "lastName": "User",
+                "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/698.jpg",
+                "isDeleted": false,
+                "dateCreated": "2023-10-25T12:46:24.053238Z",
+                "createdBy": "f8f36e72-2d98-4bad-8bc8-2e9dfb333a34",
+                "dateUpdated": "2023-08-09T09:50:04.443962Z",
+                "updatedBy": "bd67a0eb-4f42-42b6-a5d4-644daee32534",
+                "pwdHash": "zYE0PLnc78y2VIXk+9nv92To+y1eoNuJaRFCKbSiasf9teKCdSE3n5NOh0fOoy9qNE94cCaHxdOrcTuWY8HT1iXcUXNjmv+zzhhrVDGkY56Snd6xlAnm92E9UdDlXF5huwVfx4owBO4CRBIuGENEqevtxzXlN/lm6mB6Zg1ViUY8vU0L+FZo1Ha+TlCR81QVZV6Gsj7dTQu5eiw2gfG6ihVGw6ED6tHDk8ycz0TrgQOWRoe7GsrPjIGDmKWWMNkzEkKZsIKaJ5l9Vb3d1AO/vSM4alk9OA4I6gk6HlUfPA1b+zCq8/CNtkLWnwDOnEhUggCW83SFsA5UiVRtRSLDtA==",
+                "pwdSalt": "j4kECig3ojCZ0Ai51A1GZl5OhuYCHlWwwrNkZAmU+owVKHo9j35LK12PfeL6j4/+QHeTuijo4ml6p6LiM22hfQ==",
+                "addresses": [],
+                "contacts": []
+            }
+        }
+    ],
+    "version": 0
+}

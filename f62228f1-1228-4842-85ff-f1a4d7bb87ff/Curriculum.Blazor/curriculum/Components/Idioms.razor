@@ -1,0 +1,55 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+@if(Prefix != null) {
+    @Prefix
+}
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+        <MudIcon Icon="@Icons.Material.TwoTone.Language" Variant="Variant.Filled" Color="Color.Secondary"
+            Size="Size.Small"></MudIcon> @Label
+    </MudText>
+</MudItem>
+@foreach(var idiom in Items) {
+    <MudItem xs="12" md="6" lg="6">
+        <MudCard Outlined>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.body2" Color="Color.Primary" Style="font-weight: 600">@idiom.Name</MudText>
+                    <MudText Typo="Typo.body2" Color="Color.Secondary" Style="font-weight: 100">@idiom.Level</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Language" Color="Color.Default" />
+                </CardHeaderActions>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText Typo="Typo.body2" Color="Color.Default" Style="font-weight: 100">@idiom.SchoolName</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Default" Style="font-weight: 100">@idiom.Location</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+}
+
+@code {
+    [Inject]
+    private IApplicationState state {get; set;}
+
+    [Parameter]
+    public string Label {get; set;} = "Idioms";
+
+    [Parameter]
+    public ICollection<Idiom> Items {get; set;} = null!;
+
+    [Parameter]
+    public RenderFragment? Prefix {get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+    
+    public void Dispose() {
+        state.OnChange -= StateHasChanged;
+    }
+}

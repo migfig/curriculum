@@ -1,0 +1,113 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+@using Curriculum.Blazor.Components
+
+<CustomProgress RenderProgress="@(!Items.Any() || fileMap == null || !fileMap.Any())">
+    @if(isVisible) {
+        @if(Prefix != null) {
+            @Prefix
+        }
+        <MudItem xs="12" md="12" lg="12">
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+                <MudIconButton Icon="@Icons.Material.TwoTone.Task" Color="Color.Secondary" Size="Size.Small" OnClick="(e) => isVisible = !isVisible" aria-label="@Label"></MudIconButton>
+                @Label
+            </MudText>
+        </MudItem>
+        <MudTimeline TimelineAlign="TimelineAlign.Default" TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Start" Style="width: 100%">
+            @foreach(var project in Items.OrderBy(p => p.IsStack).ThenByDescending(o => o.EndDate)) {
+                <MudTimelineItem Size="Size.Small" TimelineAlign="TimelineAlign.Start" Variant="Variant.Outlined" DotStyle="background-color: transparent" >
+                    <ItemContent>
+                        <MudCard Outlined Elevation="25">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body2" Color="Color.Default" Class="mr-4"><MudElement HtmlTag="p">@((MarkupString)project.Description)</MudElement></MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudText Typo="Typo.overline" Color="Color.Default" Style="font-weight: 600">@project.StartDate.ToString("MMM yyyy") - @project.EndDate.ToString("MMM yyyy")</MudText>
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudGrid class="ma-4">
+                                    @if(project.ScreenShots.Any()) {
+                                    <MudItem sm="12" md="6" lg="5"
+                                        Class="pa-0 d-flex justify-center align-center align-content-center">
+                                        <MudCarousel Class="mud-width-full" Style="height:20vh;" ShowArrows="project.ScreenShots.Count > 1"
+                                            ShowBullets="true" EnableSwipeGesture="true" AutoCycle="false" TData="object">
+                                            @foreach(var screenShot in project.ScreenShots) {
+                                            <MudCarouselItem Transition="Transition.Fade" Color="@Color.Default">
+                                                <MudImage Fluid="true" Src="@(fileMap[screenShot.Url].OrderBy(o=> o.Size).FirstOrDefault()?.Url)"
+                                                    Alt="@screenShot.Name" Class="rounded-lg" Style="opacity: .4"/>
+                                            </MudCarouselItem>
+                                            }
+                                        </MudCarousel>
+                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="z-100"
+                                            OnClick="@((e) => ViewModalCarousel(project.ScreenShots))"
+                                            Style="position: absolute !important; filter: drop-shadow(1px 2px 4px gray) contrast(0.7) saturate(0.6) opacity(0.9)">View
+                                        </MudButton>
+                                    </MudItem>
+                                    }
+                                    <MudItem sm="12" md="6" lg="7" Class="pa-4">                            
+                                        <MudChipSet MultiSelection="false" Filter="false" Class="ml-4 mr-4">
+                                            @foreach(var tool in project.UsedTools) {
+                                                <MudChip Variant="Variant.Text" Color="Color.Secondary" Style="font-size: 0.8em">@tool</MudChip>
+                                            }
+                                        </MudChipSet>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudCardContent>
+                        </MudCard>
+                    </ItemContent>
+                    <ItemDot>
+                        <MudIcon Icon="@Icons.Material.TwoTone.Task" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small"></MudIcon>
+                    </ItemDot>
+                </MudTimelineItem>
+            }
+        </MudTimeline>
+    }
+</CustomProgress>
+
+@code {
+    [Inject]
+    private IApplicationState state {get; set;}
+
+    [Inject]
+    private IDialogService dialogService {get; set;}
+
+    [Inject]
+    private HttpClient httpClient {get; set;}
+
+    [Parameter]
+    public string Label {get; set;} = "Personal Projects";
+
+    [Parameter]
+    public ICollection<Project> Items {get; set;} = null!;
+
+    [Parameter]
+    public RenderFragment? Prefix {get; set;}
+
+    private Dictionary<string, ICollection<FileMap>>? fileMap;
+    private bool isVisible {get; set;} = true;
+
+    private async Task ViewModalCarousel(ICollection<ScreenShot> screenShots)
+    {
+        var parameters = new DialogParameters{ 
+            ["Items"] = screenShots, 
+            ["fileMap"] = fileMap,
+        };
+        var options = new DialogOptions() { FullScreen = true, CloseButton = true };
+
+        var dialog = await dialogService.ShowAsync<ScreenShotsDialog>("View Screenshots", parameters, options);
+        var result = await dialog.Result;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+        fileMap = await httpClient.GetFromJsonAsync<Dictionary<string, ICollection<FileMap>>>("data/images-map.json");
+    }
+    
+    public void Dispose() {
+        state.OnChange -= StateHasChanged;
+    }
+}

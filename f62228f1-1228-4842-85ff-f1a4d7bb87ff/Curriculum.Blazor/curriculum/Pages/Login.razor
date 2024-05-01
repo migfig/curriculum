@@ -1,0 +1,68 @@
+@page "/login"
+
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+
+<style>
+    img {
+        filter: opacity(0.9) blur(1px) grayscale(0.8);
+        -webkit-filter: opacity(0.9) blur(1px) grayscale(0.8);
+        -moz-filter: opacity(0.9) blur(1px) grayscale(0.8);
+    }    
+</style>
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height: 90vh">
+            <MudPaper Height="423px" Width="350px" Square Class="mud-theme-primary">
+                <MudImage Src="images/thin-laptop-final.jpeg" ObjectFit="ObjectFit.Cover" Fluid="true" Alt="login page"
+                    Height="423"></MudImage>
+            </MudPaper>
+            <EditForm Model="signInRequest" OnValidSubmit="ExecuteLogin">
+                <DataAnnotationsValidator />
+
+                <MudCard Class="ml-n3">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Login</MudText>
+                            <MudText Typo="Typo.overline">Please enter your login credentials or</MudText>
+                            <MudLink Typo="Typo.overline" Href="registration">register</MudLink>
+                            <MudText Typo="Typo.overline">if you don't have any</MudText>
+                        </CardHeaderContent>
+                        <CardHeaderActions>
+                            <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Default" />
+                        </CardHeaderActions>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudTextField Label="Email" Immediate="true" InputType="InputType.Email"
+                            HelperText="Email should have a maximum of 50 characters in length" HelperTextOnFocus="true"
+                            Counter="50" MaxLength="50" Adornment="Adornment.End"
+                            AdornmentIcon="@Icons.Material.Filled.Email" AdornmentAriaLabel="Email"
+                            Validation="@(new Func<string,int,IEnumerable<string>>(MaxCharacters))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signInRequest.Email"
+                            For="@(() => signInRequest.Email)" ReadOnly="true" />
+                        <MudTextField Label="Password" Immediate="true" InputType="@PasswordInputType"
+                            HelperText="Password should have a maximum of 25 characters in length"
+                            HelperTextOnFocus="true" Counter="25" MaxLength="25" Adornment="Adornment.End"
+                            AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="() => ShowPassword = !ShowPassword"
+                            Validation="@(new Func<string,int,IEnumerable<string>>(MaxCharacters))" Clearable="true"
+                            Variant="Variant.Filled" @bind-Value="signInRequest.Password"
+                            For="@(() => signInRequest.Password)" ReadOnly="true" />
+                        <MudLink Typo="Typo.overline" Href="reset-password" Class="d-flex justify-end">Forgot
+                            password?
+                        </MudLink>
+                        <MudCheckBox @bind-Checked="signInRequest.RememberMe" Label="Remember me"></MudCheckBox>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" StartIcon="@Icons.Material.Outlined.Login"
+                            Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Sign In</MudButton>
+                    </MudCardActions>
+                    @if (!loginResult.Succeeded && !string.IsNullOrEmpty(loginResult.Error))
+                    {
+                    <MudText Typo="Typo.overline" Color="Color.Error" Class="ml-2">@loginResult.Error</MudText>
+                    }
+                </MudCard>
+            </EditForm>
+        </MudStack>
+    </MudItem>
+</MudGrid>

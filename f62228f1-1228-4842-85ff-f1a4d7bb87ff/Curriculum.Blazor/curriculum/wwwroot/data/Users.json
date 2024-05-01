@@ -1,0 +1,52 @@
+[
+    {
+        "id": "4a60da48-5b0c-4d51-b8c7-c03e19c5ed97",
+        "name": "Admin",
+        "email": "admin.user@domain.com",
+        "phone": "+52 123-456-78-90",
+        "jobTitle": "Software Engineer",
+        "firstName": "Admin",
+        "lastName": "User",
+        "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/896.jpg",
+        "isDeleted": false,
+        "dateCreated": "2023-10-25T12:46:24.053238Z",
+        "createdBy": "f8f36e72-2d98-4bad-8bc8-2e9dfb333a34",
+        "dateUpdated": "2023-08-09T09:50:04.443962Z",
+        "updatedBy": "bd67a0eb-4f42-42b6-a5d4-644daee32534",
+        "pwdHash": "zYE0PLnc78y2VIXk+9nv92To+y1eoNuJaRFCKbSiasf9teKCdSE3n5NOh0fOoy9qNE94cCaHxdOrcTuWY8HT1iXcUXNjmv+zzhhrVDGkY56Snd6xlAnm92E9UdDlXF5huwVfx4owBO4CRBIuGENEqevtxzXlN/lm6mB6Zg1ViUY8vU0L+FZo1Ha+TlCR81QVZV6Gsj7dTQu5eiw2gfG6ihVGw6ED6tHDk8ycz0TrgQOWRoe7GsrPjIGDmKWWMNkzEkKZsIKaJ5l9Vb3d1AO/vSM4alk9OA4I6gk6HlUfPA1b+zCq8/CNtkLWnwDOnEhUggCW83SFsA5UiVRtRSLDtA==",
+        "pwdSalt": "j4kECig3ojCZ0Ai51A1GZl5OhuYCHlWwwrNkZAmU+owVKHo9j35LK12PfeL6j4/+QHeTuijo4ml6p6LiM22hfQ==",
+        "addresses": [
+            {
+                "id": "1f488a8a-8382-4638-925b-a59740878310",
+                "street": "Well Known",
+                "exteriorNumber": "00",
+                "interiorNumber": "00",
+                "postalCode": "01234",
+                "city": "Cd. Juarez",
+                "state": "Chih",
+                "country": "Mexico",
+                "isDeleted": false,
+                "zip": "01234",
+                "userId": "4a60da48-5b0c-4d51-b8c7-c03e19c5ed97"
+            }
+        ],
+        "contacts": [
+            {
+                "id": "a894e2ef-ec13-4915-b8ec-4da2f36f89e6",
+                "email": "admin.user@domain.com",
+                "phone": "+52 123-456-78-90",
+                "mobile": "+52 123-456-78-90",
+                "isDeleted": false,
+                "userId": "4a60da48-5b0c-4d51-b8c7-c03e19c5ed97"
+            }
+        ],
+        "groups": [
+            {
+                "id": "45f86d20-8c42-4b5c-9dd3-bcab5d9e3b10",
+                "name": "Admins",
+                "permissions": [],
+                "userId": "4a60da48-5b0c-4d51-b8c7-c03e19c5ed97"
+            }
+        ]
+    }
+]

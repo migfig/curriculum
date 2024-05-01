@@ -1,0 +1,117 @@
+@inherits LayoutComponentBase
+@using Curriculum.Blazor.Components
+@using Blazored.LocalStorage
+
+@inject ILocalStorageService localStorage
+@inject IApplicationState state
+@inject HttpClient client
+
+@implements IDisposable
+<style>
+    .mud-breadcrumb-item>a {
+        color: var(--mud-palette-primary-text);
+    }
+</style>
+
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="state.ActiveTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <AuthorizeView>
+        <Authorized>
+            @if(@context.User.Claims.IsAdmin()) {
+            <MudAppBar Elevation="0">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start"
+                    OnClick="@((e) => DrawerToggle())" />
+                <MudBreadcrumbs Items="@state.BreadcrumItems"></MudBreadcrumbs>
+                <MudSpacer />
+                <AuthLinks />
+                <MudMenu Icon="@Icons.Material.Filled.Palette" Color="Color.Inherit">
+                    @foreach (var theme in Themes)
+                    {
+                        <MudMenuItem OnClick="@((args) => ThemeChanged(theme))" Disabled="theme.Name == state.ActiveThemeName">
+                            <MudIcon Icon="@Icons.Material.Filled.Rectangle" 
+                                Style="@($"color: {theme.Properties.FirstOrDefault(p => p.Name == "Palette.Primary").Value}; vertical-align: middle;")" />
+                            <MudText Typo="Typo.button">@theme.Name</MudText>
+                        </MudMenuItem>                
+                    }
+                </MudMenu>
+                <MudToggleIconButton Toggled="@_isDarkMode" Icon="@Icons.Material.Filled.LightMode" Color="@Color.Inherit"
+                    ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledColor="@Color.Inherit" ToggledTitle="On"
+                    ToggledChanged="ThemeModeChanged" />
+            </MudAppBar>
+            }
+        </Authorized>
+    </AuthorizeView>
+    <AuthorizeView>
+        <Authorized>
+            @if(@context.User.Claims.IsAdmin()) {
+            <MudDrawer @bind-Open="_drawerOpen" Elevation="1" Variant="@DrawerVariant.Mini" OpenMiniOnHover="true">
+                <MudDrawerHeader>
+                    @if (_drawerOpen)
+                    {
+                        <MudText Typo="Typo.body1"><MudIcon Icon="@Icons.Material.Filled.Airplay" Color="Color.Default" Class="my-n2"></MudIcon> Curriculum.Blazor</MudText>
+                    }
+                </MudDrawerHeader>
+                <NavMenu />
+            </MudDrawer>
+            }
+        </Authorized>
+    </AuthorizeView>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-0 pt-0">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+    bool _isDarkMode = false;
+
+    ThemeConfig[] Themes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+
+        _isDarkMode = await localStorage.GetItemAsync<bool>("darkMode");
+
+        Themes = await client.GetFromJsonAsync<ThemeConfig[]>("/data/themes.json");
+        var themeName = await localStorage.GetItemAsStringAsync(Helper.THEME_NAME_KEY);
+        if (string.IsNullOrEmpty(themeName))
+        {
+            themeName = Themes?.First().Name;
+        }
+
+        var theme = Themes.First(t => t.Name == themeName);
+        await localStorage.SetItemAsStringAsync(Helper.THEME_NAME_KEY, theme.Name);
+        state.SetActiveItem(Helper.THEME_NAME_TYPE, theme.Name);
+        state.SetActiveItem(Helper.MUD_THEME_TYPE, theme.ThemeConfigToMudTheme(state.ActiveTheme));
+        StateHasChanged();
+    }
+
+    public async Task ThemeModeChanged(bool toggled)
+    {
+        _isDarkMode = toggled;
+        await localStorage.SetItemAsync("darkMode", _isDarkMode);
+    }
+
+    async Task ThemeChanged(ThemeConfig theme) {        
+        await localStorage.SetItemAsStringAsync(Helper.THEME_NAME_KEY, theme.Name);
+        state.SetActiveItem(Helper.THEME_NAME_TYPE, theme.Name);
+        state.SetActiveItem(Helper.MUD_THEME_TYPE, theme.ThemeConfigToMudTheme(state.ActiveTheme));
+        StateHasChanged();
+    } 
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    public void Dispose()
+    {
+        state.OnChange -= StateHasChanged;
+    }
+}

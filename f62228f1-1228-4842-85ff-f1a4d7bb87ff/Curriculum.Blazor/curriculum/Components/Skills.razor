@@ -1,0 +1,56 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+@if(Prefix != null) {
+    @Prefix
+}
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+        <MudIcon Icon="@Icons.Material.TwoTone.Bookmark" Variant="Variant.Filled" Color="Color.Secondary"
+            Size="Size.Small"></MudIcon> @Label
+    </MudText>
+</MudItem>
+<MudItem xs="12" md="6" lg="12">
+    <MudDataGrid Items="@Items.Where(i => i.IsSoft == false).OrderBy(o => o.Ordinal)" Bordered Dense Hover Outlined Filterable="false" SortMode="@SortMode.None" Groupable="false">
+        <Columns>
+            <TemplateColumn title="Description" Style="width: 80%">
+                <CellTemplate>
+                    <MudStack Row>
+                        <MudText Typo="Typo.body2" Color="Color.Default"><MudElement HtmlTag="p">@((MarkupString)@context.Item.Name):</MudElement></MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Default"><MudElement HtmlTag="p">@((MarkupString)@context.Item.Stack)</MudElement></MudText>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+            <TemplateColumn title="Level" Style="width: 20%">
+                <CellTemplate>
+                    <MudText Typo="Typo.body2" Color="Color.Default">@context.Item.Level</MudText>
+                    <MudProgressLinear Color="@context.Item.Percentage.ToColor()" Rounded="true" Size="Size.Medium" Value="@context.Item.Percentage" />
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+</MudItem>
+
+@code {
+    [Inject]
+    private IApplicationState state {get; set;}
+
+    [Parameter]
+    public string Label {get; set;} = "Stack Skills";
+
+    [Parameter]
+    public ICollection<Skill> Items {get; set;} = null!;
+
+    [Parameter]
+    public RenderFragment? Prefix {get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+    
+    public void Dispose() {
+        state.OnChange -= StateHasChanged;
+    }
+}

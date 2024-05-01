@@ -1,0 +1,50 @@
+@page "/home"
+
+@using Curriculum.Blazor.Components
+@inherits BaseComponent<Resume>
+@inject IHttpRepository<User> userRepository
+
+<PageTitle>Resume</PageTitle>
+
+<style>
+    p a {
+        text-decoration: underline;
+        color: var(--mud-palette-primary);
+    }
+</style>
+
+<CustomProgress RenderProgress="@(!itemList.Any())">
+    @foreach (var resume in @itemList)
+    {
+        <MudPaper Class="d-flex align-center justify-center align-content-end mud-width-full pa-8">
+            <MudGrid class="ma-16">
+                <Header Item="@resume" User="@user"></Header>
+                <Education Items="@resume.Certifications">
+                    <Prefix>
+                        <MudDivider Style="width: 100%"></MudDivider>
+                    </Prefix>
+                </Education>
+                <WorkExperiences Items="@resume.JobExperiences">
+                    <Prefix>
+                        <MudDivider Style="width: 100%"></MudDivider>
+                    </Prefix>
+                </WorkExperiences>
+                <Idioms Items="@resume.Idioms">
+                    <Prefix>
+                        <MudDivider Style="width: 100%"></MudDivider>
+                    </Prefix>
+                </Idioms>
+                <Skills Items="@resume.Skills"></Skills>
+                <SoftSkills Items="@resume.Skills"></SoftSkills>
+                <Training Items="@resume.Certifications"></Training>
+                <StackExperiences Items="@resume.StackExperiences">
+                    <Prefix>
+                        <MudDivider Style="width: 100%"></MudDivider>
+                    </Prefix>
+                </StackExperiences>
+                <Projects Items="@resume.Projects"></Projects>
+                <MudDivider Style="width: 100%"></MudDivider>
+            </MudGrid>
+        </MudPaper>
+    }
+</CustomProgress>

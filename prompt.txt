@@ -1,0 +1,68 @@
+Write a JSON string, 
+
+having Resume as the root model with the attributes:
+
+name as string,
+title as string,
+photo as string,
+status as eStatus,
+dateOfBirth as Datetime,
+profileValue as string,
+emails as an array of string,
+phones as an array of string,
+userId as guid with [foreign] option,
+stackExperiences as an array of StackExperience,
+jobExperiences as an array of JobExperience,
+certifications as an array of Certification,
+idioms as an array of Idiom,
+projects as an array of Project,
+skills as an array of Skill,
+hobies as an array of string.
+
+Where StackExperience model has the attributes:
+description as string,
+tags as an array of string.
+
+Where JobExperience model has the attributes:
+company as string,
+location as string,
+startDate as Datetime,
+endDate as Datetime,
+position as string,
+jobDescription as string,
+achievements as an array of string,
+functionalExperiences as an array of string,
+usedTools as an array of string.
+
+Where Certification model has the attributes:
+title as string,
+schoolName as string,
+location as string,
+isEducation as boolean,
+startDate as Datetime,
+endDate as Datetime,
+expireDate as Datetime.
+
+Where Idiom model has the attributes:
+name as string,
+level as string,
+schoolName as string,
+location as string.
+
+Where Project model has the attributes:
+description as string,
+isStack as boolean,
+startDate as Datetime,
+endDate as Datetime,
+usedTools as an array of string,
+screenShots as an array of ScreenShot.
+
+Where ScreenShot model has the attributes:
+name as string,
+url as string.
+
+Where Skill model has the attributes:
+name as string,
+stack as string,
+level as string,
+percentage as float.

@@ -1,0 +1,59 @@
+@implements IDisposable
+
+@using Curriculum.Blazor
+
+@if (Prefix != null)
+{
+    @Prefix
+}
+<MudItem xs="12" md="12" lg="12">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Style="text-transform: uppercase">
+        <MudIcon Icon="@Icons.Material.TwoTone.Domain" Variant="Variant.Filled" Color="Color.Secondary"
+            Size="Size.Small"></MudIcon> @Label
+    </MudText>
+</MudItem>
+<MudGrid>
+    @foreach (var experience in Items.OrderBy(o => o.Ordinal))
+    {
+        <MudItem xs="12" md="6" lg="4">
+            <MudCard Outlined Elevation="25">
+                 <MudCardContent>
+                     <MudElement HtmlTag="p">@((MarkupString)experience.Description)</MudElement>
+                     @if (experience.Tags.Any())
+                    {
+                        <MudChipSet MultiSelection="false" Filter="false">
+                            @foreach (var tag in experience.Tags)
+                            {
+                                <MudChip Variant="Variant.Text" Color="Color.Secondary" Style="font-size: 0.8em">@tag</MudChip>
+                            }
+                        </MudChipSet>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    }
+    </MudGrid>
+
+    @code {
+    [Inject]
+    private IApplicationState state { get; set; }
+
+    [Parameter]
+    public string Label { get; set; } = "Tech Stack Experience";
+
+    [Parameter]
+    public ICollection<StackExperience> Items { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment? Prefix { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        state.OnChange -= StateHasChanged;
+    }
+}

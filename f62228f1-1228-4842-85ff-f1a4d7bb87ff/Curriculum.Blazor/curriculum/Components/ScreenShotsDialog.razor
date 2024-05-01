@@ -1,0 +1,33 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.TwoTone.Image" Class="mr-3 mb-n1"/>Screenshots
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudCarousel Class="mud-width-full" Style="height:90vh;" ShowArrows="Items.Count > 1" BulletsColor="@Color.Primary" BulletsPosition="Position.Bottom"
+            ShowBullets="true" EnableSwipeGesture="true" AutoCycle="@(!Items.Any(i => i.Url.EndsWith(".webp")))" TData="object">
+            @foreach(var screenShot in Items) {
+                <MudCarouselItem Transition="Transition.Fade" Color="@Color.Default" Class="ma-12">
+                    <div class="d-flex justify-center" style="height:100%">
+                        <MudImage Fluid="true" Src="@(fileMap[screenShot.Url].OrderByDescending(o=> o.Size).FirstOrDefault()?.Url)"
+                        Alt="@screenShot.Name" Class="rounded-lg"/>
+                        <MudText Typo="Typo.h6" Color="Color.Primary" Class="absolute my-n12" Style="text-transform: uppercase; filter: invert(.1)">@screenShot.Name</MudText>
+                    </div>
+                </MudCarouselItem>
+            }
+        </MudCarousel>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public ICollection<ScreenShot>? Items { get; set; } = null!;
+    [Parameter] public Dictionary<string, ICollection<FileMap>>? fileMap {get; set;} = null!;
+
+     private void Cancel()
+    {
+        MudDialog.Cancel();
+    } 
+}

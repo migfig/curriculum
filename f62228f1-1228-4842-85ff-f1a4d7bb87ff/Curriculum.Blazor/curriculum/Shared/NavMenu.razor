@@ -1,0 +1,14 @@
+<AuthorizeView>
+    <Authorized>
+        <MudNavMenu>
+            @if(@context.User.Claims.IsViewer()) {
+            <MudNavLink Href="home" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Resume</MudNavLink>
+            }
+        </MudNavMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudNavMenu>
+            !Not Authorized
+        </MudNavMenu>
+    </NotAuthorized>
+</AuthorizeView>

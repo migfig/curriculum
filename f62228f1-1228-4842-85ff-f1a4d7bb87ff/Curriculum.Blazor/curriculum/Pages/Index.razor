@@ -1,0 +1,47 @@
+@page "/"
+
+@inherits BaseComponent<Resume>
+@using Curriculum.Blazor.Components
+
+<PageTitle>Dashboard</PageTitle>
+
+<CustomProgress RenderProgress="@(Summaries == null)">
+    <MudGrid class="ma-16">
+    @foreach (var summary in Summaries)
+    {
+        <MudItem xs="@summary.Columns">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <MudCard Outlined="false" Elevation="0">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@summary.Title</MudText>
+                            <MudText Typo="Typo.overline">@summary.SubTitle</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        @if ((MudBlazor.ChartType)summary.ChartType == ChartType.Donut)
+                        {
+                            <MudChart ChartType="@((MudBlazor.ChartType)summary.ChartType)" Width="300px" Height="300px" InputData="@summary.Counts"
+                        InputLabels="@summary.Labels">
+                                <CustomGraphics>
+                                    <text class="donut-inner-text" x="50%" y="40%" dominant-baseline="middle"
+                                text-anchor="middle" fill="var(--mud-palette-info)" font-family="Helvetica"
+                                font-size="2">Total</text>
+                                    <text class="donut-inner-text" x="50%" y="55%" dominant-baseline="middle"
+                                text-anchor="middle" fill="var(--mud-palette-primary)" font-family="Helvetica"
+                                font-size="5">@summary.Sum.ToString()</text>
+                                </CustomGraphics>
+                            </MudChart>
+                        }
+                        else
+                        {
+                            <MudChart ChartType="@((MudBlazor.ChartType)summary.ChartType)" Width="300px" Height="300px" InputData="@summary.Counts"
+                        InputLabels="@summary.Labels" />
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudPaper>
+        </MudItem>
+    }
+    </MudGrid>
+</CustomProgress>
